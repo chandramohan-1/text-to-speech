@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Text-to-Speech with Emotions Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        #text-input,
+        #emotion-select {
+            margin-bottom: 10px;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <h1>Text-to-Speech with Emotions Demo</h1>
+        <div id="text-input">
+            <input type="text" id="text" placeholder="Enter your text here...">
+        </div>
+        <div id="emotion-select">
+            <select id="emotion">
+                <option value="neutral">Neutral</option>
+                <option value="happy">Happy</option>
+                <option value="sad">Sad</option>
+                <option value="angry">Angry</option>
+                <option value="excited">Excited</option>
+            </select>
+        </div>
+        <button id="speak">Speak</button>
+    </div>
+    <script>
+        // Function to initiate text-to-speech with emotion
+        function speakTextWithEmotion() {
+            const text = document.getElementById("text").value;
+            const emotion = document.getElementById("emotion").value;
+
+            if (text) {
+                const speechSynthesis = window.speechSynthesis;
+                const utterance = new SpeechSynthesisUtterance(text);
+
+                // Adjust pitch, rate, and volume based on emotion
+                switch (emotion) {
+                    case "happy":
+                        utterance.pitch = 2; // Higher pitch for happiness
+                        utterance.rate = 1.2; // Faster rate for excitement
+                        utterance.volume = 1.0; // Normal volume
+                        break;
+                    case "sad":
+                        utterance.pitch = 0.5; // Lower pitch for sadness
+                        utterance.rate = 0.8; // Slower rate for sadness
+                        utterance.volume = 0.8; // Reduced volume
+                        break;
+                    case "angry":
+                        utterance.pitch = 1.5; // Higher pitch for anger
+                        utterance.rate = 1.0; // Normal rate
+                        utterance.volume = 1.2; // Increased volume for emphasis
+                        break;
+                    case "excited":
+                        utterance.pitch = 1.2; // Higher pitch for excitement
+                        utterance.rate = 1.5; // Faster rate for excitement
+                        utterance.volume = 1.0; // Normal volume
+                        break;
+                    default:
+                        // Neutral emotion
+                        utterance.pitch = 1.0; // Normal pitch
+                        utterance.rate = 1.0; // Normal rate
+                        utterance.volume = 1.0; // Normal volume
+                        break;
+                }
+
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        // Listen for the "speak" button click event
+        document.getElementById("speak").addEventListener("click", speakTextWithEmotion);
+    </script>
+</body>
+
+</html>
